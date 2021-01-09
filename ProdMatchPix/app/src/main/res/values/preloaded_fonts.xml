@@ -2,5 +2,6 @@
 <resources>
     <array name="preloaded_fonts" translatable="false">
         <item>@font/amita_bold</item>
+        <item>@font/geostar_fill</item>
     </array>
 </resources>
