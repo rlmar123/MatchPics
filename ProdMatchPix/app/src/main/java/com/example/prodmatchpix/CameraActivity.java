@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -119,8 +120,9 @@ public class CameraActivity extends AppCompatActivity {
       night_king.add("https://i.pinimg.com/564x/61/93/10/619310c9dc117e7395c6cd6570de3825--fantasy-creatures-mythical-creatures.jpg");
       night_king.add("https://endgameofthrones.files.wordpress.com/2015/06/ice_dragon_by_ironshod.jpg");
       night_king.add("https://media.vanityfair.com/photos/5cc652251d6b8739f44c2c3d/2:3/w_640,h_960,c_limit/arya-kills-the-night-king.jpg");
-      night_king.add("https://thumbs.worthpoint.com/zoom/images4/1/0217/16/white-walker-figure-game-thrones-dark_1_9bea091726499fa14d1386db97ac8283.jpg");
+      night_king.add("https://i.pinimg.com/originals/c3/ce/ee/c3ceeed00946bcb9593b6bad1d119a05.jpg");
       night_king.add("https://pbs.twimg.com/media/Efp7qdLWoAExhT6.jpg");
+      night_king.add("https://i.pinimg.com/originals/56/81/01/568101f22c536628a9d81d70e88d56e5.jpg");
 
    }
 
@@ -134,6 +136,7 @@ public class CameraActivity extends AppCompatActivity {
       darth_vader.add("https://assets.catawiki.nl/assets/2018/11/19/2/b/5/2b504e0f-3f12-49fb-9baf-f5bbac954706.jpg");
       darth_vader.add("https://as1.ftcdn.net/jpg/02/98/94/30/500_F_298943057_SB3Nr8jZ5v2zlYsNkBf4fp54UAjrk3d2.jpg");
       darth_vader.add("https://c4.wallpaperflare.com/wallpaper/866/389/184/star-wars-darth-vader-minimalism-lightsaber-wallpaper-preview.jpg");
+      darth_vader.add("https://www.disneyexperience.com/news/wp-content/uploads/2020/01/swpc_darkside-back.jpg");
    }
 
    private void theJokerImages()

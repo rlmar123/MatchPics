@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -17,16 +16,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.*;
 
 public class MainActivity extends AppCompatActivity {
-
-   private  static final long START_TIME = 15000;
-
-   private TextView timer_text;
-   private TextView score_text;
 
    private final int ARRAY_SIZE = 12;
    private int index = 0;
@@ -34,50 +31,41 @@ public class MainActivity extends AppCompatActivity {
    // Data Structures
    private ImageView[] memory_images;
    private ArrayList<ImageView> comparison_list;
-   private HashMap<ImageView, Integer> the_map;
-   private ArrayList<Integer> drawable_images;
-   private String [] image_url;
-   private ArrayList<String> game_images;
+   private HashMap<ImageView, String>the_map;
+   private ArrayList<String> url_strings;
 
    // for the timer
+   private static final long START_TIME = 15000;
    private CountDownTimer countDownTimer;
+
    private boolean reset;
    private long timeLeft = START_TIME;
+
+   private TextView timer_text;
+   private TextView score_text;
+
+   // final images
+   private String last_image;
+   private String final_images = "https://lh3.googleusercontent.com/proxy/LtrqU7XUtFDX_89z3vuwe5kw4PO9yp89olhnZGzrjHf9IPBULSF2sdEILuJ9Vzu23H_3fmi6wZK_DmJD8Kivq971Q1RTlOOnVFouRXzMmAwL7pf8Y1LkunwQWPB2Lr8FGuJDD7Zz4Q7KBpbow_s7qQ";
 
    // FOR TEST ONLY !!!! DELETE WHEN DONE !!!
    private Button time_button;
    private Button reset_button;
-
-   // test
-   private String my_url = "https://i.pinimg.com/originals/9f/d6/c9/9fd6c90880a70e8f035f9438cc5ebfcc.png";
 
    @Override
    protected void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
       setContentView(R.layout.activity_main);
 
+
+      // receive data from previous intent
+      Intent receive_intent = getIntent();
+      url_strings = receive_intent.getStringArrayListExtra("ARRAY");
+
+      // data structures are initialized
       memory_images = new ImageView[ARRAY_SIZE];
-      drawable_images = new ArrayList<>();
       the_map = new HashMap<>();
       comparison_list = new ArrayList<>();
-
-
-      // add images to array list
-  //    LoadImage loadImage = new LoadImage();
-    //  for(int i = 0; i < 6; i++)
-  //   loadImage.execute(my_url);
-
-      drawable_images.add(R.drawable.girafee);
-      drawable_images.add(R.drawable.horse);
-      drawable_images.add(R.drawable.dragon);
-      drawable_images.add(R.drawable.monkey);
-      drawable_images.add(R.drawable.pony);
-      drawable_images.add(R.drawable.tiger);
-
-      Intent receive_intent = getIntent();
-      game_images = receive_intent.getStringArrayListExtra("ARRAY");
-
-      Log.d("from main","here" + "It works !!!!!!! " + game_images.get(5));
 
       memory_images[0] = findViewById(R.id.image_0);
       memory_images[0].setTag(1);
@@ -94,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
       memory_images[4] = findViewById(R.id.image_4);
       memory_images[4].setTag(1);
 
+   //   Picasso.with(getApplicationContext()).load
       memory_images[5] = findViewById(R.id.image_5);
       memory_images[5].setTag(1);
 
@@ -115,32 +104,54 @@ public class MainActivity extends AppCompatActivity {
       memory_images[11] = findViewById(R.id.image_11);
       memory_images[11].setTag(1);
 
-      Collections.shuffle(drawable_images);
-      for(int i = 0; i < 6; i++)
-         the_map.put(memory_images[i], drawable_images.get(i));
+      last_image = url_strings.get(6);
+      url_strings.remove(6);
 
-      Collections.shuffle(drawable_images);
-      for(int i = 0; i < 6; i++)
-         the_map.put(memory_images[i + 6], drawable_images.get(i));
+      Collections.shuffle(url_strings); //
+      for(int i = 0; i < url_strings.size(); i++)
+         the_map.put(memory_images[i], url_strings.get(i)); //
+
+      Collections.shuffle(url_strings); //
+      for(int i = 0; i < url_strings.size(); i++)
+         the_map.put(memory_images[i + 6], url_strings.get(i)); //
+
+
+      // preview images
+      for(int i = 0; i < memory_images.length; i++)
+      {
+         String temp = the_map.get(memory_images[i]);
+         Picasso.get().load(temp).into(memory_images[i]);
+      }
+
+      // preview images
+      for(int i = 0; i < memory_images.length; i++)
+      {
+         String temp = the_map.get(memory_images[i]);
+         Picasso.get().load(last_image).into(memory_images[i]);
+      }
+
+
+
+
+      // disable buttons for preview purposes
+      for(int i = 0; i < memory_images.length; i++)
+         memory_images[i].setVisibility(View.VISIBLE);
+
 
       memory_images[0].setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View v) {
             Toast.makeText(getApplicationContext(),"im_1",Toast.LENGTH_LONG).show();
             changeImage(memory_images[0]);
+
          }
       });
-
 
       memory_images[1].setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View v) {
             Toast.makeText(getApplicationContext(),"im_2",Toast.LENGTH_LONG).show();
             changeImage(memory_images[1]);
-            // add images to array list
-        //    LoadImage loadImage = new LoadImage();
-          //  loadImage.execute(my_url);
-
          }
       });
 
@@ -232,32 +243,31 @@ public class MainActivity extends AppCompatActivity {
    {
       if(image.getTag().equals(1))
       {
-         Integer temp = the_map.get(image);
-         image.setImageResource(temp);
+         String temp_url = the_map.get(image); // BITMAP
+         Picasso.get().load(temp_url).into(image);
          image.setTag(2);
 
          // add button to arraylist for comparison
-          comparison_list.add(image);
+         comparison_list.add(image);
          Toast.makeText(getApplicationContext(),"Button added",Toast.LENGTH_LONG).show();
 
 
          if(comparison_list.size() == 2)
          {
 
-            Integer test_one = the_map.get(comparison_list.get(0));
-            Integer test_two = the_map.get(comparison_list.get(1));
+            String test_one = the_map.get(comparison_list.get(0));
+            String test_two = the_map.get(comparison_list.get(1));
 
-            if(test_one == test_two)
+
+            if(Objects.equals(test_one, test_two)) // strings are equal
             {
-               comparison_list.get(0).setImageResource(R.drawable.ic_launcher_foreground);
-               comparison_list.get(1).setImageResource(R.drawable.ic_launcher_foreground);
-
-               comparison_list.get(0).setImageResource(R.drawable.ic_launcher_foreground);
-               comparison_list.get(1).setImageResource(R.drawable.ic_launcher_foreground);
+               // set Images on the screen
+               Picasso.get().load(final_images).into(comparison_list.get(0));
+               Picasso.get().load(final_images).into(comparison_list.get(1));
 
                // replace the images in the map for both matching buttpns
-               the_map.replace(comparison_list.get(0), R.drawable.ic_launcher_foreground);
-               the_map.replace(comparison_list.get(1), R.drawable.ic_launcher_foreground);
+               the_map.replace(comparison_list.get(0),last_image);
+               the_map.replace(comparison_list.get(1), last_image);
 
                comparison_list.get(0).setTag(1);
                comparison_list.get(1).setTag(1);
@@ -277,27 +287,28 @@ public class MainActivity extends AppCompatActivity {
                Handler handler = new Handler();
 
                handler.postDelayed(new Runnable() {
-                  @Override
+               @Override
                   public void run() {
 
-                     comparison_list.get(0).setImageResource(R.drawable.ic_launcher_background);
-                     comparison_list.get(1).setImageResource(R.drawable.ic_launcher_background);
+        Picasso.get().load(last_image).into(comparison_list.get(0));
+                     Picasso.get().load(last_image).into(comparison_list.get(1));
 
                      comparison_list.get(0).setTag(1);
                      comparison_list.get(1).setTag(1);
                      comparison_list.clear();
-                  }
-               }, 250);
+                }
+           }, 250);
 
                Toast.makeText(getApplicationContext(),"DO NOT Match and CLEARED !!!!",Toast.LENGTH_LONG).show();
             }
          }
 
-      }
-      // image cannot be seen
+      } // outer if
+
+      // go back to green back
       else if(image.getTag().equals(2))
       {
-         image.setImageResource(R.drawable.ic_launcher_background);
+         Picasso.get().load(last_image).into(image);
          image.setTag(1);
 
          //remove button from arraylist
@@ -309,36 +320,11 @@ public class MainActivity extends AppCompatActivity {
 
    }
 
-   private class LoadImage extends AsyncTask<String, Void, Bitmap>
-   {
-      ImageView temp;
-      public LoadImage()
-      {
-       //  this.temp = change_image;
-      }
 
-      @Override
-      protected Bitmap doInBackground(String... strings) {
-         String uriLink = strings[0];
-         Bitmap bitmap = null;
-
-         try {
-            InputStream inputStream = new java.net.URL(uriLink).openStream();
-            bitmap = BitmapFactory.decodeStream(inputStream);
-         } catch (IOException e) {
-            e.printStackTrace();
-         }
-
-         return bitmap;
-      }
-
-      @Override
-      protected void onPostExecute(Bitmap bitmap)
-      {
-         // store bitmap images here
-         memory_images[1].setImageBitmap(bitmap);
-      }
-
-   } // end LosdImage
 
 } // end MainActivity
+
+
+
+
+
