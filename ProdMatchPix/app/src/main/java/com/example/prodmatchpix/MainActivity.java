@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
    // final images
    private String last_image;
-   private String final_images = "https://lh3.googleusercontent.com/proxy/LtrqU7XUtFDX_89z3vuwe5kw4PO9yp89olhnZGzrjHf9IPBULSF2sdEILuJ9Vzu23H_3fmi6wZK_DmJD8Kivq971Q1RTlOOnVFouRXzMmAwL7pf8Y1LkunwQWPB2Lr8FGuJDD7Zz4Q7KBpbow_s7qQ";
+   private String final_images;
 
    // FOR TEST ONLY !!!! DELETE WHEN DONE !!!
    private Button time_button;
@@ -56,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
    protected void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
       setContentView(R.layout.activity_main);
-
 
       // receive data from previous intent
       Intent receive_intent = getIntent();
@@ -82,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
       memory_images[4] = findViewById(R.id.image_4);
       memory_images[4].setTag(1);
 
-   //   Picasso.with(getApplicationContext()).load
       memory_images[5] = findViewById(R.id.image_5);
       memory_images[5].setTag(1);
 
@@ -104,6 +102,10 @@ public class MainActivity extends AppCompatActivity {
       memory_images[11] = findViewById(R.id.image_11);
       memory_images[11].setTag(1);
 
+      // get back of card images and final image
+      final_images = url_strings.get(7);
+      url_strings.remove(7);
+
       last_image = url_strings.get(6);
       url_strings.remove(6);
 
@@ -116,27 +118,11 @@ public class MainActivity extends AppCompatActivity {
          the_map.put(memory_images[i + 6], url_strings.get(i)); //
 
 
-      // preview images
+      // load back card images
       for(int i = 0; i < memory_images.length; i++)
       {
-         String temp = the_map.get(memory_images[i]);
-         Picasso.get().load(temp).into(memory_images[i]);
-      }
-
-      // preview images
-      for(int i = 0; i < memory_images.length; i++)
-      {
-         String temp = the_map.get(memory_images[i]);
          Picasso.get().load(last_image).into(memory_images[i]);
       }
-
-
-
-
-      // disable buttons for preview purposes
-      for(int i = 0; i < memory_images.length; i++)
-         memory_images[i].setVisibility(View.VISIBLE);
-
 
       memory_images[0].setOnClickListener(new View.OnClickListener() {
          @Override
@@ -319,8 +305,6 @@ public class MainActivity extends AppCompatActivity {
       }
 
    }
-
-
 
 } // end MainActivity
 

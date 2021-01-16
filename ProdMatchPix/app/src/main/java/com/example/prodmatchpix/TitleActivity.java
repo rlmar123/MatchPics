@@ -4,11 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 public class TitleActivity extends AppCompatActivity {
 
@@ -21,19 +24,24 @@ public class TitleActivity extends AppCompatActivity {
 
 
       fadingTextView = (TextView) findViewById(R.id.the_text);
-      start_button = (Button) findViewById(R.id.start_button);
-      fadingTextView.setText("MatchPix!");
+//      start_button = (Button) findViewById(R.id.start_button);
+      fadingTextView.setText("MovieMatch!");
 
       Animation aniFade = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.anim);
       fadingTextView.startAnimation(aniFade);
 
-      start_button.setOnClickListener(new View.OnClickListener() {
+      Handler handler = new Handler();
+
+      handler.postDelayed(new Runnable() {
          @Override
-         public void onClick(View v)
+         public void run()
          {
             Intent camera_intent = new Intent(TitleActivity.this, CameraActivity.class);
             startActivity(camera_intent);
+
+            //kills previous activity
+            finish();
          }
-      });
+      }, 5000);
    }
 }
