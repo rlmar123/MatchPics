@@ -184,13 +184,27 @@
     </GridLayout>
 
     <Button
-        android:layout_width="200dp"
+        android:id="@+id/time_button"
+        android:layout_width="75dp"
         android:layout_height="50dp"
         android:layout_below="@id/image_grid"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="108dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="103dp" />
+        android:layout_marginStart="219dp"
+        android:layout_marginTop="17dp"
+        android:layout_marginEnd="-8dp" />
+
+    <Button
+        android:id="@+id/reset_button"
+        android:layout_width="75dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/image_grid"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="17dp"
+        android:layout_marginEnd="207dp"
+        android:layout_marginRight="15dp"
+        android:layout_toLeftOf="@id/time_button" />
 
 </RelativeLayout>

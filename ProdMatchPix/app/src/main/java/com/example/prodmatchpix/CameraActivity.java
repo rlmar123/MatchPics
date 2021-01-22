@@ -144,7 +144,7 @@ public class CameraActivity extends AppCompatActivity {
 
       // back of card and final images
       darth_vader.add("https://www.disneyexperience.com/news/wp-content/uploads/2020/01/swpc_darkside-back.jpg");
-      darth_vader.add("https://i.ebayimg.com/images/g/k4wAAOSw-3FZDeyr/s-l500.jpg");
+      darth_vader.add("https://cdna.artstation.com/p/assets/covers/images/014/072/332/large/andreas-bazylewski-mg-5602w.jpg?1542325280");
    }
 
    private void theJokerImages()
@@ -159,7 +159,7 @@ public class CameraActivity extends AppCompatActivity {
       the_joker.add("https://img.mensxp.com/media/content/2020/May/Sacrifices-Heath-Ledger-Made-To-Become-The-Joker600_5eaff513cf8ce_600x900.jpeg");
 
       // back of card and final images
-      the_joker.add("https://lh3.googleusercontent.com/proxy/owxTavzLELG3dlShKkklBBJK_UnCk4C6dYzPg-G2bK88P5kUWAV6ZkUib5lvs2EjXooUQYop63m8USuNYQw3r1kTpGvhurmJ5sE423JdEHPzf97iGyobsm25sRtn");
+      the_joker.add("https://i.pinimg.com/originals/86/0f/85/860f85a3d92be8fe5735be34ab72bda2.jpg");
       the_joker.add("https://images-na.ssl-images-amazon.com/images/I/61B3hio353L._AC_SL1031_.jpg");
    }
 
